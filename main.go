@@ -19,7 +19,7 @@ func main() {
 	inStandardMode := *standardMode != ""
 
 	if inMathMode && inStandardMode {
-		fmt.Fprintln(os.Stderr, "You can't generate two different ranges. Pick a mode.")
+		_, _ = fmt.Fprintln(os.Stderr, "You can't generate two different ranges. Pick a mode.")
 		return
 	}
 
@@ -28,7 +28,7 @@ func main() {
 	} else if inStandardMode {
 		generateStandard(*standardMode)
 	} else {
-		fmt.Fprintln(os.Stderr, "You must input a range. See -h")
+		_, _ = fmt.Fprintln(os.Stderr, "You must input a range. See -h")
 	}
 }
 
@@ -37,7 +37,7 @@ func generateStandard(s string) {
 	r := regexp.MustCompile(`^\s*(\d+)\s*-\s*(\d+)\s*$`)
 	match := r.FindStringSubmatch(s)
 	if len(match) != 3 {
-		fmt.Fprintln(os.Stderr, "Could not parse the string. Check -h for an example")
+		_, _ = fmt.Fprintln(os.Stderr, "Could not parse the string. Check -h for an example")
 	}
 	// Bad practice, but I think the regex handles this.
 	begin, _ := strconv.Atoi(match[1])
