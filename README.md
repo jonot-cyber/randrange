@@ -8,6 +8,8 @@ Then move the executable into your `$PATH` and run it whenever you want!
 ## Usage
 randrange has two modes: Standard mode, and math mode (interval notation)
 
+Your range also needs to be in parentheses. This is because otherwise your shell would try to parse it.
+
 ## Standard Mode
 `randrange -s "0-20"`
 This is pretty much the range that you expect. The above command will generate a random number from 0-20, including 0 and 20
