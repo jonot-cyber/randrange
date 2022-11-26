@@ -52,6 +52,20 @@ func generateRange(begin int, end int) {
 	fmt.Println(num)
 }
 
+// generateMath takes a string s in interval notation and generates a random number in that range
 func generateMath(s string) {
-
+	r := regexp.MustCompile(`^\s*([\[\(])\s*(\d+)\s*,\s*(\d+)([\]\)])\s*$`)
+	match := r.FindStringSubmatch(s)
+	if len(match) != 5 {
+		_, _ = fmt.Fprintln(os.Stderr, "Could not parse the string. Check -h for an example")
+	}
+	begin, _ := strconv.Atoi(match[2])
+	if match[1] == "(" { // If the range is open, don't include the starting value
+		begin++
+	}
+	end, _ := strconv.Atoi(match[3])
+	if match[4] == "]" {
+		end++
+	}
+	generateRange(begin, end)
 }
