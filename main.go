@@ -45,13 +45,6 @@ func generateStandard(s string) {
 	generateRange(begin, end+1) // Add +1 because inclusive range
 }
 
-// generateRange generates a random number within the range [begin, end)
-func generateRange(begin int, end int) {
-	rand.Seed(time.Now().UnixNano())
-	num := rand.Intn(end-begin) + begin
-	fmt.Println(num)
-}
-
 // generateMath takes a string s in interval notation and generates a random number in that range
 func generateMath(s string) {
 	r := regexp.MustCompile(`^\s*([\[\(])\s*(\d+)\s*,\s*(\d+)([\]\)])\s*$`)
@@ -68,4 +61,11 @@ func generateMath(s string) {
 		end++
 	}
 	generateRange(begin, end)
+}
+
+// generateRange generates a random number within the range [begin, end)
+func generateRange(begin int, end int) {
+	rand.Seed(time.Now().UnixNano())
+	num := rand.Intn(end-begin) + begin
+	fmt.Println(num)
 }
