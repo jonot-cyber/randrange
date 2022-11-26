@@ -8,7 +8,7 @@ Then move the executable into your `$PATH` and run it whenever you want!
 ## Usage
 randrange has two modes: Standard mode, and math mode (interval notation)
 
-Your range also needs to be in parentheses. This is because otherwise your shell would try to parse it.
+Your range also needs to be in quotation marks. This is because otherwise your shell would try to parse it.
 
 ## Standard Mode
 `randrange -s "0-20"`
