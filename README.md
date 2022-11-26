@@ -19,4 +19,4 @@ This mode uses interval notation. For a quick summary, [] means inclusive, and (
 
 The program does not support negative ranges or decimal points. The following are invalid:
  - `randrange -m "[-10, -3]`
- - `randrange -s 0.5-0.7`
+ - `randrange -s "0.5-0.7"`
