@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
+	"math/rand"
 	"os"
-	"strings"
-	"unicode"
+	"regexp"
+	"strconv"
+	"time"
 )
 
 func main() {
@@ -28,47 +29,27 @@ func main() {
 		generateStandard(*standardMode)
 	} else {
 		fmt.Fprintln(os.Stderr, "You must input a range. See -h")
-		return
 	}
 }
 
+// generateStandard takes a string s in the form begin-end and generates a random number in the range [begin, end]
 func generateStandard(s string) {
-	reader := strings.NewReader(s)
-	begin, err := parseInt(reader)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Could not parse range")
-		return
+	r := regexp.MustCompile(`^\s*(\d+)\s*-\s*(\d+)\s*$`)
+	match := r.FindStringSubmatch(s)
+	if len(match) != 3 {
+		fmt.Fprintln(os.Stderr, "Could not parse the string. Check -h for an example")
 	}
-	parseDash(reader)
-	end, err := parseInt(reader)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Could not parse range")
-	}
-	fmt.Println(begin, end)
+	// Bad practice, but I think the regex handles this.
+	begin, _ := strconv.Atoi(match[1])
+	end, _ := strconv.Atoi(match[2])
+	generateRange(begin, end+1) // Add +1 because inclusive range
 }
 
-func parseInt(reader io.ReadSeeker) (int, error) {
-	skipWhiteSpace(reader)
-	buf := make([]byte, 1)
-	n, err := reader.Read(buf)
-	if err != nil {
-		return 0, err
-	}
-}
-
-func skipWhiteSpace(reader io.ReadSeeker) error {
-	buf := make([]byte, 1)
-	for {
-		_, err := reader.Read(buf)
-		if err != nil {
-			return err
-		}
-		if !unicode.IsSpace(rune(buf[0])) {
-			break
-		}
-	}
-	reader.Seek(-1, io.SeekCurrent)
-	return nil
+// generateRange generates a random number within the range [begin, end)
+func generateRange(begin int, end int) {
+	rand.Seed(time.Now().UnixNano())
+	num := rand.Intn(end-begin) + begin
+	fmt.Println(num)
 }
 
 func generateMath(s string) {
